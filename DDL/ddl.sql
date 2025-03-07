@@ -1,6 +1,6 @@
 -- Crear la base de datos y usarla
-CREATE DATABASE pruebasjdfdbskgbdf;
-USE pruebasjdfdbskgbdf;
+CREATE DATABASE Ambiental;
+USE Ambiental;
 
 -- Tabla Entidad
 CREATE TABLE Entidad(
