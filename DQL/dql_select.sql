@@ -341,6 +341,99 @@ JOIN Area a ON ea.id_area = a.id_area
 WHERE QUARTER(pi.fecha_fin) = QUARTER(CURDATE())
 GROUP BY pi.nombre, a.nombre;
 
+-- 56. Listar los proyectos de investigación con un presupuesto entre 60000 y 70000
+SELECT nombre, presupuesto
+FROM Proyecto_Investigacion
+WHERE presupuesto BETWEEN 60000 AND 70000;
+
+-- 57. Obtener el total de sueldos pagados a personal de conservación en el último mes
+SELECT SUM(sueldo) AS total_sueldos
+FROM Personal
+WHERE rol = 'Conservacion' AND MONTH(CURDATE()) - MONTH(fecha_ingreso) = 1;
+
+-- 58. Listar los vehículos asignados a personal de vigilancia con más de 70000 km recorridos
+SELECT v.marca, v.modelo, v.kilometraje
+FROM Vehiculo v
+JOIN Personal p ON v.id_vehiculo = p.id_personal
+WHERE p.rol = 'Vigilancia' AND v.kilometraje > 70000;
+
+-- 59. Cantidad de especies investigadas por proyecto y área en el último semestre
+SELECT pi.nombre AS proyecto, a.nombre AS area, COUNT(pe.id_especie) AS total_especies
+FROM Proyecto_Investigacion pi
+JOIN Proyecto_Especie pe ON pi.id_proyecto = pe.id_proyecto
+JOIN Especie_Area ea ON pe.id_especie = ea.id_especie
+JOIN Area a ON ea.id_area = a.id_area
+WHERE QUARTER(pi.fecha_fin) = QUARTER(CURDATE()) AND YEAR(pi.fecha_fin) = YEAR(CURDATE())
+GROUP BY pi.nombre, a.nombre;
+
+-- 60. Listar los proyectos de investigación con un presupuesto entre 70000 y 80000
+SELECT nombre, presupuesto
+FROM Proyecto_Investigacion
+WHERE presupuesto BETWEEN 70000 AND 80000;
+
+-- 61. Obtener el total de sueldos pagados a personal de gestión en el último mes
+SELECT SUM(sueldo) AS total_sueldos
+FROM Personal
+WHERE rol = 'Gestion' AND MONTH(CURDATE()) - MONTH(fecha_ingreso) = 1;
+
+-- 62. Listar los vehículos asignados a personal de vigilancia con más de 80000 km recorridos
+SELECT v.marca, v.modelo, v.kilometraje
+FROM Vehiculo v
+JOIN Personal p ON v.id_vehiculo = p.id_personal
+WHERE p.rol = 'Vigilancia' AND v.kilometraje > 80000;
+
+-- 63. Cantidad de especies investigadas por proyecto y área en el último año
+SELECT pi.nombre AS proyecto, a.nombre AS area, COUNT(pe.id_especie) AS total_especies
+FROM Proyecto_Investigacion pi
+JOIN Proyecto_Especie pe ON pi.id_proyecto = pe.id_proyecto
+JOIN Especie_Area ea ON pe.id_especie = ea.id_especie
+JOIN Area a ON ea.id_area = a.id_area
+WHERE YEAR(pi.fecha_fin) = YEAR(CURDATE())
+GROUP BY pi.nombre, a.nombre;
+
+-- 64. Listar los proyectos de investigación con un presupuesto entre 80000 y 90000
+SELECT nombre, presupuesto
+FROM Proyecto_Investigacion
+WHERE presupuesto BETWEEN 80000 AND 90000;
+
+-- 65. Obtener el total de sueldos pagados a personal de investigación en el último trimestre
+SELECT SUM(sueldo) AS total_sueldos
+FROM Personal
+WHERE rol = 'Investigacion' AND QUARTER(CURDATE()) - QUARTER(fecha_ingreso) = 1;
+
+-- 66. Listar los vehículos asignados a personal de vigilancia con más de 90000 km recorridos
+SELECT v.marca, v.modelo, v.kilometraje
+FROM Vehiculo v
+JOIN Personal p ON v.id_vehiculo = p.id_personal
+WHERE p.rol = 'Vigilancia' AND v.kilometraje > 90000;
+
+-- 67. Cantidad de especies investigadas por proyecto y área en el último año
+SELECT pi.nombre AS proyecto, a.nombre AS area, COUNT(pe.id_especie) AS total_especies
+FROM Proyecto_Investigacion pi
+JOIN Proyecto_Especie pe ON pi.id_proyecto = pe.id_proyecto
+JOIN Especie_Area ea ON pe.id_especie = ea.id_especie
+JOIN Area a ON ea.id_area = a.id_area
+WHERE YEAR(pi.fecha_fin) = YEAR(CURDATE())
+GROUP BY pi.nombre, a.nombre;
+
+-- 68. Listar los proyectos de investigación con un presupuesto entre 90000 y 100000
+SELECT nombre, presupuesto
+FROM Proyecto_Investigacion
+WHERE presupuesto BETWEEN 90000 AND 100000;
+
+-- 69. Obtener el total de sueldos pagados a personal de conservación en el último trimestre
+SELECT SUM(sueldo) AS total_sueldos
+FROM Personal
+WHERE rol = 'Conservacion' AND QUARTER(CURDATE()) - QUARTER(fecha_ingreso) = 1;
+
+-- 70. Listar los vehículos asignados a personal de vigilancia con más de 100000 km recorridos
+SELECT v.marca, v.modelo, v.kilometraje
+FROM Vehiculo v
+JOIN Personal p ON v.id_vehiculo = p.id_personal
+WHERE p.rol = 'Vigilancia' AND v.kilometraje > 100000;
+
+
+
 
 
 
