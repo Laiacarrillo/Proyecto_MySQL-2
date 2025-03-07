@@ -130,6 +130,84 @@ SELECT AVG(sueldo) AS sueldo_promedio
 FROM Personal
 WHERE rol = 'Investigacion';
 
+-- 22. Listar los vehículos asignados a personal de vigilancia con más de 5 años de antigüedad
+SELECT v.marca, v.modelo, YEAR(CURDATE()) - YEAR(v.modelo) AS antiguedad
+FROM Vehiculo v
+JOIN Personal p ON v.id_vehiculo = p.id_personal
+WHERE p.rol = 'Vigilancia' AND YEAR(CURDATE()) - YEAR(v.modelo) > 5;
+
+-- 23. Cantidad de especies investigadas por proyecto y tipo
+SELECT pi.nombre AS proyecto, e.tipo, COUNT(pe.id_especie) AS total_especies
+FROM Proyecto_Investigacion pi
+JOIN Proyecto_Especie pe ON pi.id_proyecto = pe.id_proyecto
+JOIN Especie e ON pe.id_especie = e.id_especie
+GROUP BY pi.nombre, e.tipo;
+
+-- 24. Listar los proyectos de investigación con un presupuesto mayor a 10000
+SELECT nombre, presupuesto
+FROM Proyecto_Investigacion
+WHERE presupuesto > 10000;
+
+-- 25. Obtener el total de sueldos pagados a personal de vigilancia
+SELECT SUM(sueldo) AS total_sueldos
+FROM Personal
+WHERE rol = 'Vigilancia';
+
+-- 26. Listar los vehículos asignados a personal de vigilancia con más de 100000 km recorridos
+SELECT v.marca, v.modelo, v.kilometraje
+FROM Vehiculo v
+JOIN Personal p ON v.id_vehiculo = p.id_personal
+WHERE p.rol = 'Vigilancia' AND v.kilometraje > 100000;
+
+-- 27. Cantidad de especies investigadas por proyecto y área
+SELECT pi.nombre AS proyecto, a.nombre AS area, COUNT(pe.id_especie) AS total_especies
+FROM Proyecto_Investigacion pi
+JOIN Proyecto_Especie pe ON pi.id_proyecto = pe.id_proyecto
+JOIN Especie_Area ea ON pe.id_especie = ea.id_especie
+JOIN Area a ON ea.id_area = a.id_area
+GROUP BY pi.nombre, a.nombre;
+
+-- 28. Listar los proyectos de investigación con un presupuesto menor a 5000
+SELECT nombre, presupuesto
+FROM Proyecto_Investigacion
+WHERE presupuesto < 5000;
+
+-- 29. Obtener el total de sueldos pagados a personal de investigación
+SELECT SUM(sueldo) AS total_sueldos
+FROM Personal
+WHERE rol = 'Investigacion';
+
+-- 30. Listar los vehículos asignados a personal de vigilancia con más de 5000 km recorridos
+SELECT v.marca, v.modelo, v.kilometraje
+FROM Vehiculo v
+JOIN Personal p ON v.id_vehiculo = p.id_personal
+WHERE p.rol = 'Vigilancia' AND v.kilometraje > 5000;
+
+-- 31. Cantidad de especies investigadas por proyecto y área en el último año
+SELECT pi.nombre AS proyecto, a.nombre AS area, COUNT(pe.id_especie) AS total_especies
+FROM Proyecto_Investigacion pi
+JOIN Proyecto_Especie pe ON pi.id_proyecto = pe.id_proyecto
+JOIN Especie_Area ea ON pe.id_especie = ea.id_especie
+JOIN Area a ON ea.id_area = a.id_area
+WHERE YEAR(pi.fecha_fin) = YEAR(CURDATE())
+GROUP BY pi.nombre, a.nombre;
+
+-- 32. Listar los proyectos de investigación con un presupuesto entre 5000 y 10000
+SELECT nombre, presupuesto
+FROM Proyecto_Investigacion
+WHERE presupuesto BETWEEN 5000 AND 10000;
+
+-- 33. Obtener el total de sueldos pagados a personal de conservación
+SELECT SUM(sueldo) AS total_sueldos
+FROM Personal
+WHERE rol = 'Conservacion';
+
+-- 34. Listar los vehículos asignados a personal de vigilancia con más de 10000 km recorridos
+SELECT v.marca, v.modelo, v.kilometraje
+FROM Vehiculo v
+JOIN Personal p ON v.id_vehiculo = p.id_personal
+WHERE p.rol = 'Vigilancia' AND v.kilometraje > 10000;
+
 
 
 
