@@ -60,3 +60,77 @@ FROM Proyecto_Investigacion pi
 JOIN Proyecto_Especie pe ON pi.id_proyecto = pe.id_proyecto
 GROUP BY pi.nombre
 HAVING COUNT(pe.id_especie) > 5;
+-- 11. Listar los parques con más de 3 áreas registradas
+SELECT p.nombre AS parque, COUNT(a.id_area) AS total_areas
+FROM Parque p
+JOIN Area a ON p.id_parque = a.id_parque
+GROUP BY p.nombre
+HAVING COUNT(a.id_area) > 3;
+
+-- 12. Obtener la cantidad de especies registradas en cada parque
+SELECT p.nombre AS parque, COUNT(DISTINCT ea.id_especie) AS total_especies
+FROM Parque p
+JOIN Area a ON p.id_parque = a.id_parque
+JOIN Especie_Area ea ON a.id_area = ea.id_area
+GROUP BY p.nombre;
+
+-- 13. Cantidad total de visitantes por año
+SELECT YEAR(a.fecha_ingreso) AS anio, COUNT(va.id_visitante) AS total_visitantes
+FROM Alojamiento a
+JOIN Visitante_Alojamiento va ON a.id_alojamiento = va.id_alojamiento
+GROUP BY YEAR(a.fecha_ingreso)
+ORDER BY anio DESC;
+
+-- 14. Promedio de presupuesto de los proyectos de investigación
+SELECT AVG(p.presupuesto) AS promedio_presupuesto
+FROM Proyecto_Investigacion p;
+
+-- 15. Obtener los alojamientos con más de 5 visitantes alojados
+SELECT a.id_alojamiento, p.nombre AS parque, COUNT(va.id_visitante) AS total_visitantes
+FROM Alojamiento a
+JOIN Parque p ON a.id_parque = p.id_parque
+JOIN Visitante_Alojamiento va ON a.id_alojamiento = va.id_alojamiento
+GROUP BY a.id_alojamiento, p.nombre
+HAVING COUNT(va.id_visitante) > 5;
+
+-- 16. Listar los investigadores y la cantidad de proyectos en los que trabajan
+SELECT per.nombre AS investigador, COUNT(pi.id_proyecto) AS total_proyectos
+FROM Personal per
+JOIN Proyecto_Investigador pi ON per.id_personal = pi.id_personal
+WHERE per.rol = 'Investigacion'
+GROUP BY per.nombre;
+
+-- 17. Obtener el total de sueldos pagados por cada tipo de personal
+SELECT rol, SUM(sueldo) AS total_sueldos
+FROM Personal
+GROUP BY rol;
+
+-- 18. Listar los vehículos asignados a personal de vigilancia con modelos del año 2020 en adelante
+SELECT v.marca, v.modelo
+FROM Vehiculo v
+JOIN Personal p ON v.id_vehiculo = p.id_personal
+WHERE p.rol = 'Vigilancia' AND v.modelo >= '2020';
+
+-- 19. Identificar el parque con la mayor cantidad de visitantes registrados
+SELECT p.nombre AS parque, COUNT(va.id_visitante) AS total_visitantes
+FROM Parque p
+JOIN Alojamiento a ON p.id_parque = a.id_parque
+JOIN Visitante_Alojamiento va ON a.id_alojamiento = va.id_alojamiento
+GROUP BY p.nombre
+ORDER BY total_visitantes DESC
+LIMIT 1;
+
+-- 20. Listar los proyectos de investigación que han finalizado
+SELECT nombre, fecha_fin
+FROM Proyecto_Investigacion
+WHERE fecha_fin < CURDATE();
+
+-- 21. Obtener el promedio de sueldos de los investigadores
+SELECT AVG(sueldo) AS sueldo_promedio
+FROM Personal
+WHERE rol = 'Investigacion';
+
+
+
+
+
