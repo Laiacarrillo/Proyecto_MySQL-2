@@ -4,13 +4,13 @@ USE Ambiental;
 
 -- Tabla Entidad
 CREATE TABLE Entidad(
-    id_entidad INT PRIMARY KEY,
+    id_entidad INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(150) NOT NULL
 );
 
 -- Tabla Departamento
 CREATE TABLE Departamento(
-    id_departamento INT PRIMARY KEY,
+    id_departamento INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     id_entidad INT, 
     FOREIGN KEY (id_entidad) REFERENCES Entidad(id_entidad)
@@ -18,7 +18,7 @@ CREATE TABLE Departamento(
 
 -- Tabla Parque
 CREATE TABLE Parque (
-    id_parque INT PRIMARY KEY,
+    id_parque INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(150) NOT NULL,
     fecha_declaracion DATE NOT NULL
 );
@@ -34,7 +34,7 @@ CREATE TABLE Parque_Departamento (
 
 -- Tabla Área dentro de un parque
 CREATE TABLE Area (
-    id_area INT PRIMARY KEY,
+    id_area INT AUTO_INCREMENT PRIMARY KEY,
     id_parque INT NOT NULL,
     nombre VARCHAR(150) NOT NULL,
     extension DECIMAL(10,2) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE Area (
 
 -- Tabla Especie
 CREATE TABLE Especie (
-    id_especie INT PRIMARY KEY,
+    id_especie INT AUTO_INCREMENT PRIMARY KEY,
     nombre_cientifico VARCHAR(200) NOT NULL,
     nombre_vulgar VARCHAR(150),
     tipo ENUM('Vegetal', 'Animal', 'Mineral') NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE Especie_Area (
 
 -- Tabla Personal
 CREATE TABLE Personal (
-    id_personal INT PRIMARY KEY,
+    id_personal INT AUTO_INCREMENT PRIMARY KEY,
     tipo_documento VARCHAR(100) NOT NULL,
     documento INT UNIQUE NOT NULL,
     nombre VARCHAR(150) NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE Personal (
 
 -- Tabla Proyecto de Investigación
 CREATE TABLE Proyecto_Investigacion (
-    id_proyecto INT PRIMARY KEY,
+    id_proyecto INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(200) NOT NULL,
     presupuesto DECIMAL(10,2) NOT NULL,
     fecha_inicio DATE NOT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE Proyecto_Especie (
 
 -- Tabla Visitante
 CREATE TABLE Visitante (
-    id_visitante INT PRIMARY KEY,
+    id_visitante INT AUTO_INCREMENT PRIMARY KEY,
     cedula VARCHAR(20) UNIQUE NOT NULL,
     nombre VARCHAR(150) NOT NULL,
     direccion VARCHAR(100),
@@ -110,7 +110,7 @@ CREATE TABLE Visitante (
 
 -- Tabla Alojamiento
 CREATE TABLE Alojamiento (
-    id_alojamiento INT PRIMARY KEY,
+    id_alojamiento INT AUTO_INCREMENT PRIMARY KEY,
     id_parque INT NOT NULL,
     capacidad INT NOT NULL,
     categoria VARCHAR(50) NOT NULL,
@@ -130,7 +130,43 @@ CREATE TABLE Visitante_Alojamiento (
 
 -- Tabla Vehiculo
 CREATE TABLE Vehiculo (
-    id_vehiculo INT PRIMARY KEY,
+    id_vehiculo INT AUTO_INCREMENT PRIMARY KEY,
     marca VARCHAR(50) NOT NULL,
     modelo VARCHAR(50) NOT NULL
+);
+
+-- Tablas DQL
+
+-- Crear la tabla Reportes
+CREATE TABLE Reportes (
+    id_reporte INT AUTO_INCREMENT PRIMARY KEY,
+    tipo VARCHAR(50) NOT NULL,
+    descripcion TEXT NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla Pagos
+CREATE TABLE Pagos (
+    id_pago INT AUTO_INCREMENT PRIMARY KEY,
+    id_alojamiento INT NOT NULL,
+    pago_total DECIMAL(10,2) NOT NULL,
+    fecha_pago DATE NOT NULL,
+    FOREIGN KEY (id_alojamiento) REFERENCES Alojamiento(id_alojamiento)
+);
+
+-- Crear la tabla Log_Operaciones
+CREATE TABLE Log_Operaciones (
+    id_log INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion TEXT NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla Log_Salarios
+CREATE TABLE Log_Salarios (
+    id_log INT AUTO_INCREMENT PRIMARY KEY,
+    id_personal INT NOT NULL,
+    sueldo_anterior DECIMAL(10,2) NOT NULL,
+    sueldo_nuevo DECIMAL(10,2) NOT NULL,
+    fecha_cambio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_personal) REFERENCES Personal(id_personal)
 );
