@@ -170,3 +170,34 @@ CREATE TABLE Log_Salarios (
     fecha_cambio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_personal) REFERENCES Personal(id_personal)
 );
+-- Crear el usuario Administrador con acceso total
+CREATE USER 'administrador'@'localhost' IDENTIFIED BY 'password_administrador';
+GRANT ALL PRIVILEGES ON ambientalistas.* TO 'administrador'@'localhost';
+
+-- Crear el usuario Gestor de parques con permisos específicos
+CREATE USER 'gestor_parques'@'localhost' IDENTIFIED BY 'password_gestor_parques';
+GRANT SELECT, INSERT, UPDATE, DELETE ON ambientalistas.Parque TO 'gestor_parques'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON ambientalistas.Area TO 'gestor_parques'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON ambientalistas.Especie TO 'gestor_parques'@'localhost';
+
+-- Crear el usuario Investigador con permisos específicos
+CREATE USER 'investigador'@'localhost' IDENTIFIED BY 'password_investigador';
+GRANT SELECT ON ambientalistas.Proyecto_Investigacion TO 'investigador'@'localhost';
+GRANT SELECT ON ambientalistas.Especie TO 'investigador'@'localhost';
+
+-- Crear el usuario Auditor con permisos específicos
+CREATE USER 'auditor'@'localhost' IDENTIFIED BY 'password_auditor';
+GRANT SELECT ON ambientalistas.Auditoria_Visitante TO 'auditor'@'localhost';
+GRANT SELECT ON ambientalistas.Auditoria_Personal TO 'auditor'@'localhost';
+GRANT SELECT ON ambientalistas.Auditoria_Vehiculo TO 'auditor'@'localhost';
+GRANT SELECT ON ambientalistas.Auditoria_Especie TO 'auditor'@'localhost';
+GRANT SELECT ON ambientalistas.Auditoria_Proyecto TO 'auditor'@'localhost';
+GRANT SELECT ON ambientalistas.Auditoria_Departamento TO 'auditor'@'localhost';
+
+-- Crear el usuario Encargado de visitantes con permisos específicos
+CREATE USER 'encargado_visitantes'@'localhost' IDENTIFIED BY 'password_encargado_visitantes';
+GRANT SELECT, INSERT, UPDATE, DELETE ON ambientalistas.Visitante TO 'encargado_visitantes'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON ambientalistas.Alojamiento TO 'encargado_visitantes'@'localhost';
+
+-- Aplicar los cambios
+FLUSH PRIVILEGES;
