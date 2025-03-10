@@ -60,7 +60,7 @@ CREATE TABLE Especie_Area (
     FOREIGN KEY (id_area) REFERENCES Area(id_area)
 );
 
--- Tabla Personal
+-- Tabla Personal 
 CREATE TABLE Personal (
     id_personal INT AUTO_INCREMENT PRIMARY KEY,
     tipo_documento VARCHAR(100) NOT NULL,
